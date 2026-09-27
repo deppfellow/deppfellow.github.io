@@ -9,7 +9,7 @@ import {
   registerResolveContexts,
   type Neighbor,
 } from "./lib/resolve";
-import { readAbout, readNotes, vaultRoot } from "./lib/vault";
+import { readAbout, readNotes, readNow, vaultRoot } from "./lib/vault";
 
 const TITLE = /^#\s+.+$/m;
 
@@ -102,6 +102,25 @@ const about: Loader = {
   },
 };
 
+const now: Loader = {
+  name: "deppfellow-now",
+  load: async ({ store, parseData, generateDigest, renderMarkdown }) => {
+    const note = await readNow(vaultRoot());
+    if (!note) return;
+    const data = await parseData({
+      id: "now",
+      data: note.updated ? { updated: note.updated } : {},
+    });
+    store.set({
+      id: "now",
+      data,
+      body: note.body,
+      rendered: await renderMarkdown(stripTitleHeading(note.body)),
+      digest: generateDigest(note.body),
+    });
+  },
+};
+
 const notes = defineCollection({
   loader: posts,
   schema: z.object({
@@ -124,9 +143,17 @@ const notes = defineCollection({
   }),
 });
 
+const metaLoader: Loader = {
+  name: "deppfellow-now",
+  load: async (context) => {
+    await about.load?.(context);
+    await now.load?.(context);
+  },
+};
+
 const meta = defineCollection({
-  loader: about,
-  schema: z.object({}),
+  loader: metaLoader,
+  schema: z.object({ updated: z.coerce.date().optional() }),
 });
 
 export const collections = { notes, meta };

@@ -1,0 +1,60 @@
+---
+import {
+  getCollection,
+  getEntry,
+  render,
+  type CollectionEntry,
+} from "astro:content";
+import Base from "../../layouts/Base.astro";
+import RuleBand from "../../components/RuleBand.astro";
+import { readNow, readRegistry, vaultRoot } from "../../lib/vault";
+
+interface Props {
+  title: string;
+  now: CollectionEntry<"meta">;
+  links: { label: string; href: string; count: number }[];
+}
+
+export async function getStaticPaths() {
+  const [note, now] = await Promise.all([
+    readNow(vaultRoot()),
+    getEntry("meta", "now"),
+  ]);
+  if (!note || !now) return [];
+
+  const categories = await readRegistry(vaultRoot());
+  const notes = await getCollection("notes");
+  const links = categories.map((category) => ({
+    label: category,
+    href: `/${category.toLowerCase()}/`,
+    count: notes.filter((entry) => entry.data.category === category).length,
+  }));
+
+  return [
+    { params: { slug: undefined }, props: { title: note.title, now, links } },
+  ];
+}
+
+const { title, now, links } = Astro.props;
+const { Content } = await render(now);
+const iso = now.data.updated?.toISOString().slice(0, 10);
+---
+
+<Base title={title}>
+  <RuleBand name="deppfellow" links={links} />
+
+  <main class="mx-auto w-full max-w-275 px-6 sm:px-10">
+    <article class="pt-16 pb-20 sm:pt-24">
+      <header class="measure mx-auto">
+        <h1 class="font-serif text-title leading-tight font-semibold text-bone">
+          {title}
+        </h1>
+        {iso && <p class="label mt-6 text-star">Updated {iso}</p>}
+      </header>
+
+      <div class="note measure mx-auto mt-10 text-bone">
+        <Content />
+      </div>
+    </article>
+  </main>
+</Base>
