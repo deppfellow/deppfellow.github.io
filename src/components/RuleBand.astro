@@ -221,11 +221,19 @@ const resultTemplate = `
     const place = function () {
       if (!nav) return;
       if (collapsed.matches) {
-        if (searchRow && searchTrigger) searchRow.appendChild(searchTrigger);
+        // The trigger re-renders only on reconnect, which appendChild fires,
+        // so the attribute flips before the move or the DOM stays stale.
+        if (searchRow && searchTrigger) {
+          searchTrigger.removeAttribute("compact");
+          searchRow.appendChild(searchTrigger);
+        }
         if (themeRow && destination) themeRow.insertBefore(toggle, destination);
       } else {
         nav.appendChild(toggle);
-        if (searchTrigger) nav.appendChild(searchTrigger);
+        if (searchTrigger) {
+          searchTrigger.setAttribute("compact", "true");
+          nav.appendChild(searchTrigger);
+        }
       }
     };
     const setOpen = function (open) {
