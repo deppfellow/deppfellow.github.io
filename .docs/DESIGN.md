@@ -43,6 +43,11 @@ typography:
     fontWeight: 400
     lineHeight: 1.2
     letterSpacing: "0.09em"
+  micro:
+    fontFamily: "Spectral, ui-serif, Georgia, serif"
+    fontSize: "0.6875rem"
+    fontWeight: 400
+    lineHeight: 1.4
 rounded:
   none: "0"
 spacing:
@@ -206,9 +211,17 @@ Square corners everywhere (`0` radius). Rectangles are the plate's own shape; th
 
 **Observer's note.** The markdown note from `ABOUT.md`, set at `1.5rem / 1.55` in bone with a `65ch` measure; its paragraphs take `1.1em` bottom margin and nothing else.
 
+**Now line.** The small serif line under the Observer's note on the home page - "See the now page for the overview of what I'm doing now." with "now" linked to `/now/` - set at the micro size, `0.6875rem / 1.4`. Hover moves the link to iris on the house one-step `120ms steps(2, end)` color transition. It renders only when `NOW.md` exists in the vault, with or without `ABOUT.md`, and it is the Now page's single discovery point.
+
 **The Ruled Row Rule.** Lists are ruled rows, never cards and never nested containers. Every row spans the container so that columns align down the page.
 
 **The One-Step Rule.** Motion is one mechanical step: `120ms` with `steps(2, end)` and a `3px` overshoot that settles at `2px`. Nothing glides, nothing fades in, and `prefers-reduced-motion` removes it entirely.
+
+## Now Page
+
+The Now page at `/now/` renders `NOW.md` from the vault root: the person's latest condition as one snapshot rewritten in place, never a dated feed. The prose takes the reading-page treatment - the note voice at the `65ch` measure inside the standard container - under a single h1 built from the note's title. When the front matter carries `updated`, an optional Scales date line sits under the h1 ("Updated YYYY-MM-DD", tabular numerals); without it, no date line renders.
+
+The page exists only when `NOW.md` is in the vault: without the file no route is built, and the home Now line disappears with it. The band ships without the Search trigger, the page carries no FAB, and it stays out of the search index - no `data-pagefind-body` mark and no scripts beyond the head pre-paint and the band.
 
 ## Build Baseline
 
