@@ -43,6 +43,11 @@ typography:
     fontWeight: 400
     lineHeight: 1.2
     letterSpacing: "0.09em"
+  micro:
+    fontFamily: "Spectral, ui-serif, Georgia, serif"
+    fontSize: "0.6875rem"
+    fontWeight: 400
+    lineHeight: 1.4
 rounded:
   none: "0"
 spacing:

@@ -56,7 +56,8 @@
     "typographyMeta": {
       "note": { "displayName": "Observer's Note", "purpose": "The home note from ABOUT.md; the largest reading voice in the system." },
       "title": { "displayName": "Plate Title", "purpose": "List row titles in the reading serif." },
-      "label": { "displayName": "Scale Label", "purpose": "Dates, counts, legends, navigation and section names, always in caps." }
+      "label": { "displayName": "Scale Label", "purpose": "Dates, counts, legends, navigation and section names, always in caps." },
+      "micro": { "displayName": "Micro", "purpose": "Fine print; the Now line under the Observer's note is the first consumer.", "fontSize": "0.6875rem", "lineHeight": 1.4 }
     },
     "shadows": [],
     "motion": [
