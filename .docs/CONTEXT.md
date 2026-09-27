@@ -20,6 +20,18 @@ _Avoid_: feed, timeline, list of posts
 The opening paragraph on the home page, rendered from `ABOUT.md` at the vault root at a `65ch` measure.
 _Avoid_: about blurb, intro text, tagline
 
+**Now page**:
+The standalone page rendering `NOW.md` from the vault root: the person's latest condition, one snapshot rewritten in place as it changes - never a dated feed. The significant counterpart to the Logs category.
+_Avoid_: status feed, microblog, changelog, about page
+
+**Now line**:
+The small serif line under the Observer's note on the home page, linking to the Now page; it renders only when `NOW.md` exists.
+_Avoid_: banner, callout, footer note
+
+**Logs**:
+The casual daily category: small, unimportant day-to-day notes written when the mood strikes. It carries no statement of current focus; the Now page owns that.
+_Avoid_: microblog, changelog, status feed
+
 **Scales**:
 The condensed-cap typographic voice (`Archivo Narrow`, `0.09em` tracking, tabular numerals) used for dates, counts, legend items, category links and section headings - never for prose.
 _Avoid_: the small caps, the technical font, the label font
