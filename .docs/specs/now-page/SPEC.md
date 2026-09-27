@@ -1,7 +1,7 @@
 ---
 document_type: specification
 initiative_slug: now-page
-contract_status: draft # derived, never hand-edited
+contract_status: approved # derived, never hand-edited
 created_at: 2026-09-27 # fixed at first derivation
 updated_at: 2026-09-27 # last derivation date
 ---
@@ -93,9 +93,9 @@ Astro 7.3.2 + Tailwind CSS 4.3.3, static output, `unified()` Markdown processor 
 
 | Slice | Delivered behavior                                                                                                    | Ownership   | Blocked-by |
 | ----- | --------------------------------------------------------------------------------------------------------------------- | ----------- | ---------- |
-| T1    | `/now/` end to end: `readNow` + meta `now` loader with `updated` schema, fixture `NOW.md`, conditional `/now/` route with Updated line, sitemap loc. | agent-owned | None       |
-| T2    | The Now line on home: `--text-micro` token, sentence under the Observer's note linked to `/now/`, presence keyed on `NOW.md`. | agent-owned | T1         |
-| T3    | Design-contract docs: `DESIGN.md` micro size, Now line element entry, Now-page section.                                | agent-owned | T1, T2     |
+| T1 (td-56f10a)    | `/now/` end to end: `readNow` + meta `now` loader with `updated` schema, fixture `NOW.md`, conditional `/now/` route with Updated line, sitemap loc. | agent-owned | None       |
+| T2 (td-c4470c)    | The Now line on home: `--text-micro` token, sentence under the Observer's note linked to `/now/`, presence keyed on `NOW.md`. | agent-owned | T1         |
+| T3 (td-6a3f94)    | Design-contract docs: `DESIGN.md` micro size, Now line element entry, Now-page section.                                | agent-owned | T1, T2     |
 
 REQ coverage: T1 → REQ-01/02/03/04/08/09; T2 → REQ-05/06/07/08; T3 → REQ-10.
 
