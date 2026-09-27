@@ -182,3 +182,24 @@ export async function readAbout(
     body: content.trim(),
   };
 }
+
+export async function readNow(
+  root: string,
+): Promise<{ title: string; body: string; updated?: Date } | null> {
+  const file = join(root, "NOW.md");
+  if (!existsSync(file)) return null;
+  const { data, content } = matter(await readFile(file, "utf8"));
+  const match = content.match(TITLE);
+  const updated =
+    data.updated instanceof Date
+      ? data.updated
+      : typeof data.updated === "string"
+        ? new Date(data.updated)
+        : undefined;
+
+  return {
+    title: match ? match[1].trim() : String(data.title ?? "Now"),
+    body: content.trim(),
+    ...(updated && !Number.isNaN(updated.getTime()) ? { updated } : {}),
+  };
+}

@@ -1,14 +1,15 @@
 import type { APIRoute } from "astro";
-import { getCollection } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import { tagPages } from "../lib/resolve";
 import { readRegistry, vaultRoot } from "../lib/vault";
 import { absolute, notePath, requireSite, tagPath } from "../lib/urls";
 
 export const GET: APIRoute = async ({ site }) => {
   const origin = requireSite(site);
-  const [categories, notes] = await Promise.all([
+  const [categories, notes, now] = await Promise.all([
     readRegistry(vaultRoot()),
     getCollection("notes"),
+    getEntry("meta", "now"),
   ]);
 
   // Tag locs come from the same tagPages helper that generates the
@@ -16,6 +17,7 @@ export const GET: APIRoute = async ({ site }) => {
   // build does not produce.
   const paths = [
     "/",
+    ...(now ? ["/now/"] : []),
     ...categories.map((category) => `/${category.toLowerCase()}/`),
     ...notes.map((note) => notePath(note.data)),
     ...[...tagPages(notes).keys()].map(tagPath),

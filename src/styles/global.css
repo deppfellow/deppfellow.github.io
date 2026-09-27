@@ -26,6 +26,8 @@
   --text-label--line-height: 1.2;
   --text-name: 0.9375rem;
   --text-name--line-height: 1.2;
+  --text-micro: 0.6875rem;
+  --text-micro--line-height: 1.4;
 }
 
 @layer base {
