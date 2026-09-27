@@ -345,7 +345,7 @@ pagefind-modal-trigger {
   display: inline-flex;
   width: auto;
   height: auto;
-  gap: 0;
+  gap: 0.5rem;
   padding: 0;
   background: transparent;
   border: none;
