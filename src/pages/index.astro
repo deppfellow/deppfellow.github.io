@@ -20,6 +20,7 @@ const latest = notes
   .slice(0, 10);
 
 const about = await getEntry("meta", "about");
+const now = await getEntry("meta", "now");
 const AboutBody = about ? (await render(about)).Content : null;
 ---
 
@@ -31,6 +32,19 @@ const AboutBody = about ? (await render(about)).Content : null;
       <section class="note measure pt-16 pb-16 text-note text-bone sm:pt-24 sm:pb-20">
         <AboutBody />
       </section>
+    )}
+
+    {now && (
+      <p class="text-micro text-bone">
+        See the{" "}
+        <a
+          href="/now/"
+          class="underline transition-colors duration-120 ease-[steps(2,end)] hover:text-iris"
+        >
+          now
+        </a>{" "}
+        page for the overview of what I'm doing now.
+      </p>
     )}
 
     <section class="pb-24 sm:pb-32" aria-labelledby="latest">
