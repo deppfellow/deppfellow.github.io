@@ -18,8 +18,9 @@ When this ticket closes, the site renders `NOW.md` from the vault root as the No
 ## Interface Contract
 
 - `readNow(root: string)` exported from `src/lib/vault.ts` next to `readAbout`. Returns `{ title: string; body: string; updated?: Date } | null`. Returns `null` if and only if `<root>/NOW.md` does not exist. `title` comes from the first `# ` heading in the body, else front-matter `title`, else `"Now"`. `updated` parses from front matter `updated` via gray-matter when present.
-- `src/content.config.ts`: the `meta` collection gains a second loader (name `deppfellow-now`) storing entry id `now` with the rendered markdown. The collection schema becomes `z.object({ updated: z.coerce.date().optional() })`; the existing `about` entry omits `updated`.
+- `src/content.config.ts`: the `meta` collection loads both vault-root entries - `about` as before and `now` beside it. Astro 7.3.2 permits one runtime loader per collection, so the two logical loaders (`deppfellow-about`, `deppfellow-now`) compose through a single runtime loader; entry ids and the schema are unchanged from this contract (D-09). The collection schema becomes `z.object({ updated: z.coerce.date().optional() })`; the existing `about` entry omits `updated`.
 - New route `src/pages/now/[...slug].astro`: `getStaticPaths` returns exactly one entry producing `/now/` when the meta `now` entry exists, and zero entries when it does not. The page renders `Base` (title from the note title), `RuleBand` without `search`, an h1 with the title, and when `updated` exists a Scales date line "Updated YYYY-MM-DD" (tabular numerals) under the h1. The body renders at the `note measure` width. No `data-pagefind-body`, no FAB, no pagefind markup, no scripts beyond what `Base` and `RuleBand` already ship.
+- The composed meta loader clears its collection store before loading - the data store persists across builds, and a stale entry would survive a deleted vault file (D-10).
 - `src/pages/sitemap.xml.ts` includes exactly one `/now/` loc when the meta `now` entry exists, none otherwise.
 
 ## Examples

@@ -68,7 +68,7 @@ Astro 7.3.2 + Tailwind CSS 4.3.3, static output, `unified()` Markdown processor 
 ## Implementation Decisions
 
 - Vault read: `readNow` in `src/lib/vault.ts` mirrors `readAbout` - `join(root, "NOW.md")`, `existsSync` guard, gray-matter front matter, title from the `# ` heading (front-matter `title` fallback), returning `{ title, body, updated? }`. ({D-02, D-04})
-- Content collection: the `meta` collection gains a second loader (`deppfellow-now`) storing entry id `now`; the collection schema becomes `z.object({ updated: z.coerce.date().optional() })` (the about entry simply omits it). ({D-02, D-04})
+- Content collection: the `meta` collection loads entry id `now` beside `about`; Astro 7.3.2's one-loader-per-collection rule means the two logical loaders compose through a single runtime loader (D-09); the collection schema becomes `z.object({ updated: z.coerce.date().optional() })` (the about entry simply omits it). ({D-02, D-04})
 - Conditional route: `src/pages/now/[...slug].astro` with `getStaticPaths` returning one entry (rest param undefined → `/now/`) when the meta `now` entry exists, else `[]` - Astro builds the route iff the file exists, satisfying REQ-04 without post-build surgery. ({D-06})
 - Now line: `src/pages/index.astro` renders the sentence after the about section inside the same `max-w-275` container, sized `var(--text-micro)`, link hover to iris, presence keyed on `getEntry("meta", "now")`. ({D-03})
 - Sitemap: the `paths` array prepends `"/now/"` iff the meta `now` entry exists, keeping routes and locs in lockstep. ({D-05})

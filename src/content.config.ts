@@ -146,6 +146,9 @@ const notes = defineCollection({
 const metaLoader: Loader = {
   name: "deppfellow-now",
   load: async (context) => {
+    // The data store persists across builds: an early return would keep a
+    // stale entry alive after its vault file disappears (D-10).
+    context.store.clear();
     await about.load?.(context);
     await now.load?.(context);
   },
